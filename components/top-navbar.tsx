@@ -31,35 +31,12 @@ const TopNavbar: React.FC = () => {
     <div className="flex h-12 w-full items-center justify-between border-b px-4">
       <div className="flex items-center gap-x-2">
         <Image
-          src="https://cdn.worldvectorlogo.com/logos/jira-3.svg"
+          src="/icon.png"
           alt="Jira logo"
           width={25}
           height={25}
         />
-        <span className="text-sm font-medium text-gray-600">Jira Clone</span>
-        <Button
-          href="https://github.com/sebastianfdz/jira_clone"
-          target="_blank"
-          className="ml-3 flex gap-x-2"
-        >
-          <AiFillGithub />
-          <span className="text-sm font-medium">Github Repo</span>
-        </Button>
-        {stars ? (
-          <Button
-            href="https://github.com/sebastianfdz/jira_clone"
-            target="_blank"
-            customColors
-            className="ml-3 flex gap-x-2 bg-black"
-          >
-            <AiFillGithub className="text-white" />
-            <span className=" text-sm font-medium text-white">Star</span>
-            <div className="flex items-center pr-1.5 text-sm font-medium text-white">
-              <span className="pr-1">{stars}</span>
-              <AiFillStar className="text-yellow-300" />
-            </div>
-          </Button>
-        ) : null}
+        <span className="text-sm font-medium text-gray-600">Chiral</span>
       </div>
       {user ? (
         <div className="flex items-center gap-x-2">
