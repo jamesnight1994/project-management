@@ -125,7 +125,6 @@ const ProjectList: React.FC= () => {
   return (
     <>
       <div className="w-full flex-col flex">
-        <div>{projects.length}</div>
         <Button
           onClick={() => setIsEditing(true)}
           data-state={isEditing ? "closed" : "open"}
