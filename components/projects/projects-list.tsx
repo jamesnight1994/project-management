@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge"
 import { Droppable } from "react-beautiful-dnd";
 import { AccordionContent } from "../ui/accordion";
 import { Button } from "../ui/button";
@@ -10,6 +11,18 @@ import { useUser } from "@clerk/clerk-react";
 import { useStrictModeDroppable } from "@/hooks/use-strictmode-droppable";
 import { useIsAuthenticated } from "@/hooks/use-is-authed";
 import { EmtpyProject } from "./project-empty";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import moment from "moment";
 
 
 const projects: ProjectType[] = [
@@ -68,7 +81,7 @@ const ProjectList: React.FC= () => {
   const [isAuthenticated, openAuthModal] = useIsAuthenticated();
 
   if (!droppableEnabled) {
-    return null;
+    return <div></div>;
   }
 
   
@@ -110,38 +123,67 @@ const ProjectList: React.FC= () => {
     // );
   }
   return (
-    <AccordionContent className="pt-2">
-      <Droppable droppableId={"projects"}>
-        {({ droppableProps, innerRef, placeholder }) => (
-          <div
-            {...droppableProps}
-            ref={innerRef}
-            className={clsx(projects.length == 0 && "min-h-[1px]")}
-          >
-            {placeholder}
-          </div>
-        )}
-      </Droppable>
+    <>
+      <div className="w-full flex-col flex">
+        <div>{projects.length}</div>
+        <Button
+          onClick={() => setIsEditing(true)}
+          data-state={isEditing ? "closed" : "open"}
+          customColors
+          className="my-1 flex w-full bg-transparent hover:bg-gray-200 [&[data-state=closed]]:hidden"
+        >
+          <AiOutlinePlus className="text-sm" />
+          <span className="text-sm">Create Project</span>
+        </Button>
 
-      <Button
-        onClick={() => setIsEditing(true)}
-        data-state={isEditing ? "closed" : "open"}
-        customColors
-        className="my-1 flex w-full bg-transparent hover:bg-gray-200 [&[data-state=closed]]:hidden"
-      >
-        <AiOutlinePlus className="text-sm" />
-        <span className="text-sm">Create Project</span>
-      </Button>
-
-      <EmtpyProject
-        data-state={isEditing ? "open" : "closed"}
-        className="[&[data-state=closed]]:hidden"
-        onCreate={({ name }) => handleCreateProject({ name, })}
-        onCancel={() => setIsEditing(false)}
-        isCreating={isCreating}
-      />
-    </AccordionContent>
+        <EmtpyProject
+          data-state={isEditing ? "open" : "closed"}
+          className="[&[data-state=closed]]:hidden"
+          onCreate={({ name }) => handleCreateProject({ name, })}
+          onCancel={() => setIsEditing(false)}
+          isCreating={isCreating}
+        />
+        <div className="border-[.05rem] rounded-sm mt-2">
+          <TableWrapper />
+        </div>
+      </div>
+    </>
   );
 };
+
+const TableWrapper = () => (
+  <Table>
+    {/* <TableCaption>A list of your projects</TableCaption> */}
+    <TableHeader>
+      <TableRow>
+        <TableHead>Project Name</TableHead>
+        <TableHead>Start Date</TableHead>
+        <TableHead>End Date</TableHead>
+        <TableHead className="w-[100px]">Amount</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {projects.map((aProject:any, idx:number) => (
+          <TableRow key={idx}>
+            <TableCell className="font-medium">{aProject.name}</TableCell>
+            <TableCell>{moment(aProject.startDate).format('MMM Do, YYYY')}</TableCell>
+            <TableCell>{moment(aProject.endDate).format('MMM Do, YYYY')}</TableCell>
+            <TableCell className="text-left">
+              <Badge 
+                variant={aProject.status === 'Completed' ? "default" : "destructive"}
+                className={`${aProject.status === 'Completed' 
+                  ? "bg-green-600" 
+                  : aProject.status === 'In Progress'
+                    ? "bg-amber-600"
+                    : "bg-primary"
+                  }
+                  whitespace-nowrap`}
+              >{aProject.status}</Badge>
+            </TableCell>
+          </TableRow>
+      ))}
+    </TableBody>
+  </Table>
+)
 
 export { ProjectList };

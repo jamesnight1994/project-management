@@ -5,9 +5,10 @@ import { useSelectedIssueContext } from "@/context/use-selected-issue-context";
 import "@/styles/split.css";
 import { ProjectsHeader } from "./header";
 import { ProjectList } from "./projects-list";
+import { useProject } from "@/hooks/query-hooks/use-project";
 
 const Projects: React.FC = () => {
-  // const { projects } = useProject();
+  const { project } = useProject();
   const { issueKey, setIssueKey } = useSelectedIssueContext();
   const renderContainerRef = React.useRef<HTMLDivElement>(null);
 
@@ -16,6 +17,8 @@ const Projects: React.FC = () => {
     const calculatedHeight = renderContainerRef.current.offsetTop;
     renderContainerRef.current.style.height = `calc(100vh - ${calculatedHeight}px)`;
   }, []);
+
+  if (!project) return null;
 
   return (
     <Fragment>
@@ -27,7 +30,7 @@ const Projects: React.FC = () => {
           className="flex max-h-full w-full"
           minSize={issueKey ? 400 : 0}
         >
-          {/* <ProjectList/> */}
+          <ProjectList/>
         </Split>
       </div>
     </Fragment>
