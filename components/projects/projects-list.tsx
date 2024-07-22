@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import moment from "moment";
+import { useProject } from "@/hooks/query-hooks/use-project";
 
 
 const projects: ProjectType[] = [
@@ -75,6 +76,7 @@ const projects: ProjectType[] = [
 
 const ProjectList: React.FC= () => {
   // const { createProject, isCreating } = useProjects();
+  useProject();
   const { user } = useUser();
   const [isEditing, setIsEditing] = useState(false);
   const [droppableEnabled] = useStrictModeDroppable();

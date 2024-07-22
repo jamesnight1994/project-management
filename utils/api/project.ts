@@ -6,6 +6,10 @@ import { type GetProjectMembersResponse } from "@/app/api/project/[project_id]/m
 const baseUrl = getBaseUrl();
 
 export const projectRoutes = {
+  getProjects: async () => {
+    throw new Error('Not Implemented')
+  },
+
   getProject: async () => {
     const { data } = await axios.get<GetProjectResponse>(
       `${baseUrl}/api/project`

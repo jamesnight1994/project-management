@@ -6,7 +6,7 @@ const Signin = () => {
     <div className="flex h-screen w-screen flex-col items-center justify-center gap-6">
       <SignIn
         path="/sign-in"
-        redirectUrl={"/project/backlog"}
+        redirectUrl={"/projects/manage"}
         signUpUrl="/sign-up"
         appearance={{
           elements: {
