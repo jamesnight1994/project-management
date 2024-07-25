@@ -106,29 +106,12 @@ const TableWrapper = ({ projects }: { projects: any[] }) => (
     <TableHeader>
       <TableRow>
         <TableHead>Project Name</TableHead>
-        <TableHead>Start Date</TableHead>
-        <TableHead>End Date</TableHead>
-        <TableHead className="w-[100px]">Amount</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
       {projects.map((aProject: any, idx: number) => (
         <TableRow key={idx}>
           <TableCell className="font-medium">{aProject.name}</TableCell>
-          <TableCell>{moment(aProject.startDate).format('MMM Do, YYYY')}</TableCell>
-          <TableCell>{moment(aProject.endDate).format('MMM Do, YYYY')}</TableCell>
-          <TableCell className="text-left">
-            <Badge
-              variant={aProject.status === 'Completed' ? "default" : "destructive"}
-              className={`${aProject.status === 'Completed'
-                ? "bg-green-600"
-                : aProject.status === 'In Progress'
-                  ? "bg-amber-600"
-                  : "bg-primary"
-                }
-                  whitespace-nowrap`}
-            >{aProject.status}</Badge>
-          </TableCell>
         </TableRow>
       ))}
     </TableBody>
