@@ -7,6 +7,6 @@ export type GetProjectsResponse = {
 };
 
 export async function GET() {
-  const project = await prisma.project.findMany();
-  return NextResponse.json({ project });
+  const projects = await prisma.project.findMany();
+  return NextResponse.json({ projects });
 }
